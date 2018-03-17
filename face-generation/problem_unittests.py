@@ -1,5 +1,6 @@
 from copy import deepcopy
-from unittest import mock
+#from unittest import mock
+import mock
 import tensorflow as tf
 
 
