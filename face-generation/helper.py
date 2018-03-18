@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 import math
 import os
 import hashlib
-from urllib.request import urlretrieve
+#from urllib.request import urlretrieve # ImportError: No module named request
+from urllib import urlretrieve
 import zipfile
 import gzip
 import shutil
@@ -102,7 +104,7 @@ def images_square_grid(images, mode):
     :return: Image of images in a square grid
     """
     # Get maximum size for square grid of images
-    save_size = math.floor(np.sqrt(images.shape[0]))
+    save_size = int(math.floor(np.sqrt(images.shape[0])))
 
     # Scale to 0-255
     images = (((images - images.min()) * 255) / (images.max() - images.min())).astype(np.uint8)
@@ -211,8 +213,7 @@ class Dataset(object):
         while current_index + batch_size <= self.shape[0]:
             data_batch = get_batch(
                 self.data_files[current_index:current_index + batch_size],
-                *self.shape[1:3],
-                self.image_mode)
+                *(self.shape[1:3] + (self.image_mode,)))
 
             current_index += batch_size
 
